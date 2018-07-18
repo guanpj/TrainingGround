@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.me.guanpj.trainingground.dispatch.MyLinearLayout
+        android:id="@+id/ll_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.me.guanpj.trainingground.dispatch.MyButton
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click me"/>
+
+    </com.me.guanpj.trainingground.dispatch.MyLinearLayout>
+
+    <!--<com.me.guanpj.trainingground.dispatch.MyButton
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click me"/>-->
+
+</LinearLayout>
