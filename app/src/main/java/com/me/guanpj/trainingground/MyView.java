@@ -8,13 +8,26 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 public class MyView extends View {
     private String mText;
     private int mTextSize;
+    private int mBgColor;
+    private Paint mPaint;
+    private Rect mTextBound;
+    private int mTextWidth;
+    private int mTextHeight;
+
+    {
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setTextSize(mTextSize);
+        mPaint.setColor(Color.RED);
+        mPaint.setStyle(Paint.Style.STROKE);
+
+        mTextBound = new Rect();
+    }
 
     public MyView(Context context) {
         this(context, null);
@@ -30,16 +43,21 @@ public class MyView extends View {
         TypedArray ta = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.MyView, defStyleAttr, 0);
         mText = ta.getString(R.styleable.MyView_text);
-        Log.e("gpj", mText);
         mTextSize = ta.getDimensionPixelSize(R.styleable.MyView_textSize,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, getResources().getDisplayMetrics()));
+        mBgColor = ta.getColor(R.styleable.MyView_bgColor, Color.WHITE);
         ta.recycle();
+
+        mPaint.setTextSize(mTextSize);
+        mPaint.getTextBounds(mText,0, mText.length(), mTextBound);
+        mTextWidth = (int) mPaint.measureText(mText);
+        mTextHeight = mTextBound.height();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int measuredWidth = getPaddingLeft() + mText.length() * mTextSize + getPaddingRight();
-        int measuredHeight = getPaddingTop() + mTextSize + getPaddingBottom();
+        int measuredWidth = getPaddingLeft() + mTextWidth + getPaddingRight();
+        int measuredHeight = getPaddingTop() + mTextHeight + getPaddingBottom();
 
         measuredWidth = calculateSize(measuredWidth, widthMeasureSpec);
         measuredHeight = calculateSize(measuredHeight, heightMeasureSpec);
@@ -64,14 +82,8 @@ public class MyView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setTextSize(mTextSize);
-
-        Rect textBound = new Rect();
-        paint.getTextBounds(mText,0, mText.length(), textBound);
-
-        canvas.drawText(mText, getMeasuredWidth()/2 - (textBound.right - textBound.left)/2, getMeasuredHeight()/2 + (textBound.bottom - textBound.top)/2, paint);
+        canvas.drawColor(mBgColor);
+        canvas.drawText(mText, getMeasuredWidth()/2 - mTextWidth/2,
+                getMeasuredHeight()/2 + mTextHeight/2, mPaint);
     }
 }

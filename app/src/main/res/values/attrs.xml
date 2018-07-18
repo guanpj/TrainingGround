@@ -3,5 +3,6 @@
     <declare-styleable name="MyView">
         <attr name="text" format="string" />
         <attr name="textSize" format="dimension" />
+        <attr name="bgColor" format="color" />
     </declare-styleable>
 </resources>
