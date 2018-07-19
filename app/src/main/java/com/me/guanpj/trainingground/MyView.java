@@ -1,5 +1,6 @@
 package com.me.guanpj.trainingground;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -47,6 +48,9 @@ public class MyView extends View {
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, getResources().getDisplayMetrics()));
         mBgColor = ta.getColor(R.styleable.MyView_bgColor, Color.WHITE);
         ta.recycle();
+        ObjectAnimator aa = ObjectAnimator.ofInt(this, "translateX", 300, 100);
+        aa.start();
+        ObjectAnimator animator = ObjectAnimator.ofArgb(this, "color", 0xffff0000, 0xff00ff00);
 
         mPaint.setTextSize(mTextSize);
         mPaint.getTextBounds(mText,0, mText.length(), mTextBound);
