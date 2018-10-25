@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.me.guanpj.trainingground.hen_coder.course_06.DashBoardView
+    <com.me.guanpj.trainingground.hen_coder.course_06.PieChartView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

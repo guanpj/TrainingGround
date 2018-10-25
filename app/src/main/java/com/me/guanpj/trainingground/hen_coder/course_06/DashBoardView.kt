@@ -5,6 +5,7 @@ import android.graphics.*
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 
 class DashBoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
@@ -25,7 +26,7 @@ class DashBoardView(context: Context?, attrs: AttributeSet?) : View(context, att
 
     init {
 
-        dashBoardBound = RectF(width/2 - RADIUS, height/2 - RADIUS, width/2 + RADIUS, height/2 + RADIUS)
+        dashBoardBound = RectF(width / 2 - RADIUS, height / 2 - RADIUS, width / 2 + RADIUS, height / 2 + RADIUS)
 
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = Utils.dp2px(2f)
@@ -35,14 +36,26 @@ class DashBoardView(context: Context?, attrs: AttributeSet?) : View(context, att
         path.addArc(dashBoardBound, 150f,
                 ANGLE)
         var pathMeasure = PathMeasure(path, false)
-        dashEffect = PathDashPathEffect(dashPath,(pathMeasure.length - markWidth) / markCount, 0f, PathDashPathEffect.Style.ROTATE)
+        dashEffect = PathDashPathEffect(dashPath, (pathMeasure.length - markWidth) / markCount, 0f, PathDashPathEffect.Style.ROTATE)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        dashBoardBound = RectF(width / 2 - RADIUS, height / 2 - RADIUS, width /
+                2 + RADIUS, height / 2 + RADIUS)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        dashBoardBound = RectF(width/2 - RADIUS, height/2 - RADIUS, width/2 + RADIUS, height/2 + RADIUS)
+        canvas.drawArc(dashBoardBound,
+                150f,
+                ANGLE,
+                false,
+                paint)
+
+        paint.pathEffect = dashEffect
 
         canvas.drawArc(dashBoardBound,
                 150f,
@@ -50,19 +63,19 @@ class DashBoardView(context: Context?, attrs: AttributeSet?) : View(context, att
                 false,
                 paint)
 
-        paint.setPathEffect(dashEffect)
+        paint.pathEffect = null
 
-        canvas.drawArc(dashBoardBound,
-                150f,
-                ANGLE,
-                false,
-                paint)
+        var stopX = (width / 2f + Math.cos(Math.toRadians(getDegreeByMark(5)))).toFloat() * LENGTH
+        var stopY = ((height / 2f + Math.sin(Math.toRadians(getDegreeByMark(5)))).toFloat()) * LENGTH
 
-        paint.setPathEffect(null)
+        Log.e("gpj", "stopx:${stopX}")
+        Log.e("gpj", "stopy:${stopY}")
 
-        /*canvas.drawArc(100f, 100f, 300f, 300f, 30f, 150f, false, paint)
 
-        canvas.drawArc(dashBoardBound, (90 + ANGLE / 2).toFloat(),
-                (360 - ANGLE).toFloat(), false, paint)*/
+        canvas.drawLine(width / 2f, height / 2f,
+                width / 2f + (Math.cos(Math.toRadians(getDegreeByMark(5)))).toFloat() * LENGTH,
+                height / 2f +(Math.sin(Math.toRadians(getDegreeByMark(5)))).toFloat() * LENGTH, paint)
     }
+
+    fun getDegreeByMark(mark: Int): Double = (150f + (ANGLE + markWidth) * mark / markCount).toDouble()
 }
