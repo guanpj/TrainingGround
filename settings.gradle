@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':HenCoder_1', ':HenCoder_2', ':HenCoder_3', ':HenCoder_4', ':HenCoder_5', ':HenCoder_6', ':HenCoder_7', ':HenCoder_layout'
