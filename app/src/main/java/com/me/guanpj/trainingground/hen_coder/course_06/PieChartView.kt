@@ -3,12 +3,11 @@ package com.me.guanpj.trainingground.hen_coder.course_06
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.util.AttributeSet
-import android.view.View
-import android.graphics.Color.parseColor
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.RectF
+import android.util.AttributeSet
+import android.view.View
 
 
 class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
