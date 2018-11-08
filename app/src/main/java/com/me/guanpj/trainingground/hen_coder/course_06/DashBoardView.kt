@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import com.me.guanpj.trainingground.Utils
 
 class DashBoardView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 

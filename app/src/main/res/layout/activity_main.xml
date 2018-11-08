@@ -5,17 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.me.guanpj.trainingground.MyView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        myview:bgColor="@color/colorPrimary"
-        myview:text="400"
-        myview:textSize="20sp" />
-
-    <com.me.guanpj.trainingground.MyView
+    <com.me.guanpj.trainingground.hen_coder.course_07.CameraView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        myview:text="400"
-        myview:textSize="20sp"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

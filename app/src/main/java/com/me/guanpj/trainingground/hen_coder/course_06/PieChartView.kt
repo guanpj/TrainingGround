@@ -8,6 +8,7 @@ import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.me.guanpj.trainingground.Utils
 
 
 class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
