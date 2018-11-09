@@ -17,23 +17,39 @@ class CameraView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     init {
         camera.rotateX(45f)
         camera.setLocation(0f, 0f, Utils.getZForCamera())
-        bitmap = Utils.getAvatar(resources, 400)
+        bitmap = Utils.getAvatar(resources, 600)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val bitmapWidth = bitmap.width
-        val bitmapHeight = bitmap.height
+        val bitmapWidth = bitmap.width.toFloat()
+        val bitmapHeight = bitmap.height.toFloat()
         val centerX = width / 2f
         val centerY = height / 2f
-        val x = centerX - bitmapWidth / 2
-        val y = centerY - bitmapHeight / 2
+        val bitmapLeft = centerX - bitmapWidth / 2
+        val bitmapTop = centerY - bitmapHeight / 2
+        val bitmapRight = centerX + bitmapHeight / 2
+        val bitmapBottom = centerY + bitmapHeight / 2
 
+        canvas.save()
         canvas.translate(centerX, centerY)
-        camera.applyToCanvas(canvas)
+        //canvas.rotate(20f)
+        canvas.clipRect(-bitmapWidth, -bitmapHeight, bitmapWidth, 0f)
+        //canvas.rotate(-20f)
         canvas.translate(-centerX, -centerY)
-        canvas.drawBitmap(bitmap, x, y, paint)
+        canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, paint)
+        canvas.restore()
+
+        canvas.save()
+        canvas.translate(centerX, centerY)
+        //canvas.rotate(20f)
+        camera.applyToCanvas(canvas)
+        canvas.clipRect(-bitmapWidth, 0f, bitmapWidth, bitmapHeight)
+        //canvas.rotate(-20f)
+        canvas.translate(-centerX, -centerY)
+        canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, paint)
+        canvas.restore()
 
     }
 }
