@@ -21,6 +21,9 @@
 
         </activity>
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".hen_coder.course_07.CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

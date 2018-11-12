@@ -14,8 +14,11 @@ class CameraView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var camera = Camera()
     private lateinit var bitmap: Bitmap
 
+    internal var topFlip = 0f
+    internal var bottomFlip = 0f
+    internal var flipRotation = 0f
+
     init {
-        camera.rotateX(45f)
         camera.setLocation(0f, 0f, Utils.getZForCamera())
         bitmap = Utils.getAvatar(resources, 600)
     }
@@ -34,22 +37,61 @@ class CameraView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
 
         canvas.save()
         canvas.translate(centerX, centerY)
-        //canvas.rotate(20f)
+        canvas.rotate(flipRotation)
+        camera.save()
+        camera.rotateX(topFlip)
+        camera.applyToCanvas(canvas)
+        camera.restore()
         canvas.clipRect(-bitmapWidth, -bitmapHeight, bitmapWidth, 0f)
-        //canvas.rotate(-20f)
+        canvas.rotate(-flipRotation)
         canvas.translate(-centerX, -centerY)
         canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, paint)
         canvas.restore()
 
         canvas.save()
         canvas.translate(centerX, centerY)
-        //canvas.rotate(20f)
+        canvas.rotate(flipRotation)
+        camera.save()
+        camera.rotateX(bottomFlip)
         camera.applyToCanvas(canvas)
+        camera.restore()
         canvas.clipRect(-bitmapWidth, 0f, bitmapWidth, bitmapHeight)
-        //canvas.rotate(-20f)
+        canvas.rotate(-flipRotation)
         canvas.translate(-centerX, -centerY)
         canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, paint)
         canvas.restore()
+    }
 
+    fun getTopFlip(): Float {
+        return topFlip
+    }
+
+    fun setTopFlip(topFlip: Float) {
+        this.topFlip = topFlip
+        invalidate()
+    }
+
+    fun getBottomFlip(): Float {
+        return bottomFlip
+    }
+
+    fun setBottomFlip(bottomFlip: Float) {
+        this.bottomFlip = bottomFlip
+        invalidate()
+    }
+
+    fun getFlipRotation(): Float {
+        return flipRotation
+    }
+
+    fun setFlipRotation(flipRotation: Float) {
+        this.flipRotation = flipRotation
+        invalidate()
+    }
+
+    fun reset() {
+        topFlip = 0f
+        bottomFlip = 0f
+        flipRotation = 0f
     }
 }
